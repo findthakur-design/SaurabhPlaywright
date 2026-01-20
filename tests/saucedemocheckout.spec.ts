@@ -1,0 +1,25 @@
+import{test,expect} from'@playwright/test';
+import { LoginPage } from './pages/loginpage';
+import { testdata } from './pages/utils';
+import { InventoryPage } from './pages/inventorypage';
+import { CartPage } from './pages/cartpage';
+import { cartdata } from './pages/inventorypage';
+test("@testcheckout checkout", async ({page}) => {
+    const loginPage = new LoginPage(page);
+    const inventoryPage = new InventoryPage(page);
+    const cartPage = new CartPage(page);
+    await loginPage.launchUrl(testdata.url);
+    await loginPage.login(testdata.username, testdata.password);
+    await inventoryPage.assertInventoryPage();
+    await page.pause();
+    const expecteditem:cartdata[] = await inventoryPage.addToCartByProductsNumber(6);
+    // const productTitle = await inventoryPage.addToCartByProductName(["Sauce Labs Backpack", "Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt",]);
+    await page.pause();
+    console.log("Products added to cart:", expecteditem);
+    await inventoryPage.goToCartPage();
+    await cartPage.assertCartPage();
+    const itemsToRemove = 6;
+    await cartPage.removeItemByProductsNumber(itemsToRemove);
+    console.log(`Removed ${itemsToRemove} items from the cart`);
+    await page.pause();
+    await expect(expecteditem).toBe(checkoutitem);
