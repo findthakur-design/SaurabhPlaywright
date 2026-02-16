@@ -1,4 +1,6 @@
-import { Locator, Page } from "@playwright/test";
+import { request, Locator, Page } from "@playwright/test";
+// import {request} from "@playwright/test";
+
 
 export class LoginPage {
     page:Page;
@@ -15,9 +17,17 @@ export class LoginPage {
         await this.page.goto(url);
     }
 
-    public async login(username:string, password:string){
-        await this.username.fill(username);
-        await this.password.fill(password);
+    public async login(username1:string, password1:string){
+        // let context = await request.newContext();
+        // let response = await context.get('https://www.saucedemo.com/api/authenticate');
+        // let formattedResponse = await response.json();
+        // let username = formattedResponse.data.username;
+        // let password = formattedResponse.data.password;
+        await this.username.fill(username1);
+        await this.password.fill(password1);
         await this.loginButton.click();
+        await this.page.pause();
     }
+
+
 }
