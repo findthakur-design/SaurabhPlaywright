@@ -22,4 +22,5 @@ test("@testcheckout checkout", async ({page}) => {
     await cartPage.removeItemByProductsNumber(itemsToRemove);
     console.log(`Removed ${itemsToRemove} items from the cart`);
     await page.pause();
-    await expect(expecteditem).toBe(checkoutitem);
+    await expect(expecteditem).toBe(checkoutitem); 
+});

@@ -1,4 +1,9 @@
 import { defineConfig, devices } from '@playwright/test';
+import { getenv } from './env';
+
+getenv();
+
+const environment = process.env.ENV || 'qa';
 
 /**
  * Read environment variables from file.
@@ -33,6 +38,8 @@ export default defineConfig({
     trace: 'on-first-retry',
     actionTimeout: 15000, // Action timeout (15 seconds)
     navigationTimeout: 120000, // Navigation timeout (30 seconds)
+   // slowMo:  500 : 0, // Slow down by 500ms in QA environment
+   
   },
 
   /* Configure projects for major browsers */
